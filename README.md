@@ -1,4 +1,3 @@
-japan-map-selector
-==================
+Japan Map (jQuery plugin)
 
-Clickable map to select one of the prefectures of Japan.
+jQuery plugin to show clickable map of prefectures (or area) of Japan.
