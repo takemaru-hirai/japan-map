@@ -35,7 +35,7 @@
             lineWidth           : 1,
             drawsBoxLine        : true,
             showsPrefectureName : false,
-            PrefectureNameType  : "full",
+            prefectureNameType  : "full",
             areas               : definition_of_allJapan,
             prefectures         : definition_of_prefectures,
             movesIslands        : false,          //  Moves Nansei Islands (Okinawa and part of Kagishima) to the left-top space.
@@ -296,7 +296,7 @@
     Map.prototype.getPrefectureName = function(prefecture){
         if (this.options.areas.indexOf(prefecture) > -1)
             return prefecture.name;
-        switch (this.options.PrefectureNameType){
+        switch (this.options.prefectureNameType){
             case "short"   : return prefecture.name.replace(/[都|府|県]$/, "");
             case "english" : return definition_of_english_name[prefecture.code];
             case "romaji"  : return definition_of_english_name[prefecture.code];
