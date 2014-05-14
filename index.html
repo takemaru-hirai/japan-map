@@ -41,23 +41,33 @@
         <h1>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h1>
 
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Japan Map Selector - Sample&lt;/title&gt;
-    &lt;script src="/path/to/jquery.min.js"&gt;&lt;/script&gt;
-    &lt;script src="/path/to/jquery-jmap.js"&gt;&lt;/script&gt;
-    &lt;script&gt;
-    $(function(){
-        $("#map-container").jmap();
-    });
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id="map-container"&gt;&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<p>Put <code>&lt;script&gt;</code> tag to import jquery-japan-map.js (or minified jquery-japan-map.min.js) after jQuery importing. Then <code>$(selector).japanMap()</code> method will create most simple clickable canvas map of prefectures of Japan.  </p>
+
+<p>The <code>$.japanMap</code> method take an object as argument which defines <code>options</code>. At least, you may have to implement <code>onSelect</code> event handler, which runs when a prefecture of the map is clicked or touched.</p>
+
+<p>Here is most simple example. </p>
+
+<div class="highlight highlight-html"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Japan Map Selector - Sample<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/path/to/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/path/to/jquery.japan-map.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s2">"#map-container"</span><span class="p">).</span><span class="nx">japanMap</span><span class="p">({</span>
+                <span class="nx">onSelect</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"map-container"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
       </section>
 
     </div>
