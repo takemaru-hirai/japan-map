@@ -34,7 +34,7 @@
         <h1>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h1>
 
-<p>Put <code>&lt;script&gt;</code> tag to import <code>jquery-japan-map.js</code> after jQuery importing. Then <code>$(selector).japanMap()</code> method will create most simple clickable canvas map of prefectures of Japan.  </p>
+<p>Include <code>jquery-japan-map.js</code> after jQuery. Then <code>$(selector).japanMap(options)</code> method will create most simple clickable canvas map of prefectures of Japan.  </p>
 
 <p>The <code>$.japanMap</code> method take an object as argument which defines <code>options</code>. At least, you may have to implement <code>onSelect</code> event handler, which runs when a prefecture of the map is clicked or touched.</p>
 
@@ -63,6 +63,171 @@
 </pre></div>
 
 <p><a href="example/index.html">DEMO - EXAMPLE 1</a></p>
+
+<h1>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h1>
+
+<p>japamMap method takes an <code>options</code> object as an argument. this object has parameters as following. Unit of sizes is px. </p>
+
+<h2>
+<a name="type" class="anchor" href="#type"><span class="octicon octicon-link"></span></a>type</h2>
+
+<p>Type of the element created by the plugin. Because only <code>"canvas"</code> is defined as far, this parameter has no meaning. Default value is "canvas".</p>
+
+<pre><code>type : "canvas"
+</code></pre>
+
+<h2>
+<a name="width-height" class="anchor" href="#width-height"><span class="octicon octicon-link"></span></a>width, height</h2>
+
+<p>Width and height of the element (such as canvas) of hole clickable map. When both values are set, larger values which keep aspect ratio of the map are used. Default value is <code>651</code> and <code>571</code>.</p>
+
+<pre><code>width : 800
+</code></pre>
+
+<h2>
+<a name="color" class="anchor" href="#color"><span class="octicon octicon-link"></span></a>color</h2>
+
+<p>Base background color of prefectures or areas. This value is used when vakues of <code>areasObject.color</code> (see below) are not defined. This value also used as text color whent <code>options.showsPrefectureName</code> parameter (see below) is <code>true</code>. Default value is <code>"#a0a0a0"</code>.</p>
+
+<pre><code>color : "#000000"
+</code></pre>
+
+<h2>
+<a name="hovercolor" class="anchor" href="#hovercolor"><span class="octicon octicon-link"></span></a>hoverColor</h2>
+
+<p>Base background color of prefectures or areas when mouse is on. This value is used when vakues of <code>areasObject.color</code> (see below) are not defined. 20% brightened of <code>color</code> is used as default value.</p>
+
+<pre><code>hoverColor : "red"
+</code></pre>
+
+<h2>
+<a name="backgroundcolor" class="anchor" href="#backgroundcolor"><span class="octicon octicon-link"></span></a>backgroundColor</h2>
+
+<p>Background color of <strong>element</strong> of the map, "canvas" for example. Default value is <code>"transparent"</code>.</p>
+
+<pre><code>backgroundColor : "#eef8ff"
+</code></pre>
+
+<h2>
+<a name="linecolor-linewidth" class="anchor" href="#linecolor-linewidth"><span class="octicon octicon-link"></span></a>lineColor, lineWidth</h2>
+
+<p>Color and width of border lines of <strong>element</strong> of the map. Also used as separating line when <code>options.movesIslands</code> is true. Default values are <code>"#a0a0a0"</code> and <code>1</code>.  </p>
+
+<pre><code>lineColor : "#ffffff",
+lineWidth : 0.5
+</code></pre>
+
+<h2>
+<a name="drawsboxline" class="anchor" href="#drawsboxline"><span class="octicon octicon-link"></span></a>drawsBoxLine</h2>
+
+<p>Flags if border lines of <strong>element</strong> of the map are drawn or not. Default value is <code>true</code>.</p>
+
+<pre><code>drawsBoxLine : false
+</code></pre>
+
+<h2>
+<a name="borderlinecolor-borderlinewidth" class="anchor" href="#borderlinecolor-borderlinewidth"><span class="octicon octicon-link"></span></a>borderLineColor, borderLineWidth</h2>
+
+<p>Color and width of border lines of prefectures. Default values are <code>"#ffffff"</code> and <code>0.25</code>.  </p>
+
+<pre><code>borderLineColor : "#eef8ff",
+borderLineWidth : 0.5
+</code></pre>
+
+<h2>
+<a name="showsprefecturename" class="anchor" href="#showsprefecturename"><span class="octicon octicon-link"></span></a>showsPrefectureName</h2>
+
+<p>If true, the names of prefectures are shown on the map. Default value is <code>false</code>.</p>
+
+<pre><code>showsPrefectureName : true
+</code></pre>
+
+<h2>
+<a name="prefecturenametype" class="anchor" href="#prefecturenametype"><span class="octicon octicon-link"></span></a>prefectureNameType</h2>
+
+<p>String parameter how shows the names of prefectures. <code>"full"</code> or <code>"kanji"</code> shows full name as Kanji  like <code>東京都</code> or <code>大阪府</code>. <code>"short"</code> shows shorten name as Kanji like <code>東京</code> or <code>大阪</code>. <code>"english"</code> or <code>"romaji"</code> shows alphabetical name like <code>Tokyo</code> or <code>Osaka</code>. Default value is <code>"full"</code>.</p>
+
+<h2>
+<a name="movesislands" class="anchor" href="#movesislands"><span class="octicon octicon-link"></span></a>movesIslands</h2>
+
+<p>Flags if Nansei Islands are moved to top-left separated space of the map, so that width of the map is used economically. Default value is <code>false</code>.</p>
+
+<pre><code>movesIslands : true
+</code></pre>
+
+<h2>
+<a name="selection" class="anchor" href="#selection"><span class="octicon octicon-link"></span></a>selection</h2>
+
+<p>You can choose which is selected on the map, <code>"prefecture"</code> or <code>"area"</code> of Japan. Here the "area" means group of prefectures, such as 関東(Kanto) or 近畿(Kinki). Default value is <code>"prefecture"</code>.</p>
+
+<pre><code>selection : "area"
+</code></pre>
+
+<h1>
+<a name="areas" class="anchor" href="#areas"><span class="octicon octicon-link"></span></a>areas</h1>
+
+<p>If you set <code>"area"</code> to the <code>selection</code> parameter, you have to define areas by creating <code>areas</code> array of object. </p>
+
+<pre><code>areas : areasObject
+</code></pre>
+
+<p><code>areas</code> object array is like </p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">areasObject</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">...,</span>
+    <span class="p">{</span>
+        <span class="s2">"code"</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">"name"</span><span class="o">:</span><span class="s2">"関東地方"</span><span class="p">,</span>
+        <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#84b0f6"</span><span class="p">,</span>
+        <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#c1d8fd"</span><span class="p">,</span>
+        <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">...</span>
+<span class="p">];</span>
+</pre></div>
+
+<p>Each object must have parameters as following.</p>
+
+<h3>
+<a name="code-required" class="anchor" href="#code-required"><span class="octicon octicon-link"></span></a>code (required)</h3>
+
+<p>Any number or string to recognize different areas. This code can be referred in <code>onSelect</code> and <code>onHover</code> event handlers.</p>
+
+<h3>
+<a name="name-required" class="anchor" href="#name-required"><span class="octicon octicon-link"></span></a>name (required)</h3>
+
+<p>Any string which represents the area, such as "関東地方"(Kanto) or "近畿地方"(Kinki). This code can be referred in <code>onSelect</code> and <code>onHover</code> event handlers.</p>
+
+<h3>
+<a name="prefectures-required" class="anchor" href="#prefectures-required"><span class="octicon octicon-link"></span></a>prefectures (required)</h3>
+
+<p>Array of the prefecture code (see definition below) which belongs to the area.</p>
+
+<h3>
+<a name="color-1" class="anchor" href="#color-1"><span class="octicon octicon-link"></span></a>color</h3>
+
+<p>Background color of the area. Usually colors are important to classify different areas. If not set, value of <code>options.color</code> parameter will be used as Default value.</p>
+
+<h3>
+<a name="hovercolor-1" class="anchor" href="#hovercolor-1"><span class="octicon octicon-link"></span></a>hoverColor</h3>
+
+<p>Background color of the area when mouse pointer is on. If not set, 20% brighten value of <code>color</code> will be used.</p>
+
+<h1>
+<a name="event-handlers" class="anchor" href="#event-handlers"><span class="octicon octicon-link"></span></a>event handlers</h1>
+
+<h2>
+<a name="onselect--functiondata" class="anchor" href="#onselect--functiondata"><span class="octicon octicon-link"></span></a>onSelect : function(data)</h2>
+
+<h2>
+<a name="onhover--functiondata" class="anchor" href="#onhover--functiondata"><span class="octicon octicon-link"></span></a>onHover : function(data)</h2>
+
+<h1>
+<a name="another-example" class="anchor" href="#another-example"><span class="octicon octicon-link"></span></a>Another Example</h1>
+
+<h1>
+<a name="prefecture-codes" class="anchor" href="#prefecture-codes"><span class="octicon octicon-link"></span></a>Prefecture codes</h1>
       </section>
     </div>
 
