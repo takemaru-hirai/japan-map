@@ -1,32 +1,32 @@
 {
-    "name": "depend",
-    "title": "Solution for the dependency problem",
-    "description": "jQuery plugin for resolve of the dependency problem about client browser or/and client platform using userAgent string.",
+    "name": "japan-map",
+    "title": "Clickable map of Japan",
+    "description": "jQuery plugin for creating clickable canvas (as far) map of prefectures or areas of Japan.",
     "keywords": [
-        "browser",
-        "platform",
-        "detection",
         "html5",
-        "mobile",
-        "tablet",
-        "support"
+        "canvas",
+        "japan",
+        "map",
+        "prefecture",
+        "clickable",
+        "selector"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1",
     "author": {
-        "name": "garafu",
-        "url": "https://github.com/garafu"
+        "name": "Takemaru Hirai",
+        "url": "https://github.com/takemaru-hirai"
     },
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/garafu/jquery.depend/blob/master/MIT-LICENSE.txt"
+            "url": "https://github.com/takemaru-hirai/japan-map/blob/master/LICENSE.txt"
         }
     ],
-    "bugs": "https://github.com/garafu/jquery.depend/issues",
-    "homepage": "https://github.com/garafu/jquery.depend",
-    "docs": "https://github.com/garafu/jquery.depend/wiki",
-    "download": "https://github.com/garafu/jquery.depend",
+    "bugs": "https://github.com/takemaru-hirai/japan-map/issues",
+    "homepage": "http://takemaru-hirai.github.io/japan-map/",
+    "docs": "http://takemaru-hirai.github.io/japan-map/",
+    "download": "http://takemaru-hirai.github.io/japan-map/",
     "dependencies": {
-        "jquery": ">=1.9.1"
+        "jquery": ">=1.11.1"
     }
 }
