@@ -1,6 +1,6 @@
 {
     "name": "japan-map",
-    "title": "Clickable map of Japan",
+    "title": "Japan Map - Clickable map of Japan",
     "description": "jQuery plugin for creating clickable canvas (as far) map of prefectures or areas of Japan.",
     "keywords": [
         "html5",
