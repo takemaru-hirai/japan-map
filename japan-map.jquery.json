@@ -1,0 +1,32 @@
+{
+    "name": "depend",
+    "title": "Solution for the dependency problem",
+    "description": "jQuery plugin for resolve of the dependency problem about client browser or/and client platform using userAgent string.",
+    "keywords": [
+        "browser",
+        "platform",
+        "detection",
+        "html5",
+        "mobile",
+        "tablet",
+        "support"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "garafu",
+        "url": "https://github.com/garafu"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/garafu/jquery.depend/blob/master/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/garafu/jquery.depend/issues",
+    "homepage": "https://github.com/garafu/jquery.depend",
+    "docs": "https://github.com/garafu/jquery.depend/wiki",
+    "download": "https://github.com/garafu/jquery.depend",
+    "dependencies": {
+        "jquery": ">=1.9.1"
+    }
+}
