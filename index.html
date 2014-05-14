@@ -1,47 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Japan Map Selector - Document by takemaru-hirai</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Japan Map Selector - Document : jQuery plugin which shows clickable map of areas or prefectures of Japan." />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Japan Map Selector - Document</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/takemaru-hirai/japan-map-selector">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/takemaru-hirai/japan-map-selector/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/takemaru-hirai/japan-map-selector/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/takemaru-hirai/japan-map-selector">View on GitHub</a>
 
-      <section>
-        <div id="title">
-          <h1>Japan Map Selector - Document</h1>
-          <p>jQuery plugin which shows clickable map of areas or prefectures of Japan.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/takemaru-hirai">takemaru-hirai</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+          <h1 id="project_title">Japan Map Selector - Document</h1>
+          <h2 id="project_tagline">jQuery plugin which shows clickable map of areas or prefectures of Japan.</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/takemaru-hirai/japan-map-selector/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/takemaru-hirai/japan-map-selector/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h1>
 
-<p>Put <code>&lt;script&gt;</code> tag to import jquery-japan-map.js (or minified jquery-japan-map.min.js) after jQuery importing. Then <code>$(selector).japanMap()</code> method will create most simple clickable canvas map of prefectures of Japan.  </p>
+<p>Put <code>&lt;script&gt;</code> tag to import <code>jquery-japan-map.js</code> after jQuery importing. Then <code>$(selector).japanMap()</code> method will create most simple clickable canvas map of prefectures of Japan.  </p>
 
 <p>The <code>$.japanMap</code> method take an object as argument which defines <code>options</code>. At least, you may have to implement <code>onSelect</code> event handler, which runs when a prefecture of the map is clicked or touched.</p>
 
@@ -69,9 +62,17 @@
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Japan Map Selector - Document maintained by <a href="https://github.com/takemaru-hirai">takemaru-hirai</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
