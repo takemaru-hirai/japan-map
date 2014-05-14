@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Japan Map - Exsample</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.japan-map.min.js"></script>
+    <script>
+        $(function(){
+            $("#map-container").japanMap({
+                onSelect : function(data){
+                    alert(data.name);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="map-container"></div>
+</body>
+</html>
