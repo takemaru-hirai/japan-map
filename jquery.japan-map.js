@@ -4,8 +4,7 @@
  * Copyright (c) 2014 Takemaru Hirai
  * http://takemaru-hirai.github.io/japan-map-selector/
  *
- * Released under the MIT license *
- * http://
+ * Released under the MIT license
  *
  * Includes code of tikamoton
  * http://jsdo.it/tikamoton/vz68
