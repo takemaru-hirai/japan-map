@@ -36,18 +36,23 @@
             drawsBoxLine        : true,
             showsPrefectureName : false,
             prefectureNameType  : "full",
+            showsAreaName       : false,
+            areaNameType        : "full",
             areas               : definition_of_allJapan,
             prefectures         : definition_of_prefectures,
             movesIslands        : false,          //  Moves Nansei Islands (Okinawa and part of Kagishima) to the left-top space.
+            font                : "Arial",
+            fontSize            : null,
+            fontColor           : null,
+            fontShadowColor     : "#ffffff",
             onSelect            : function(){},
             onHover             : function(){}
         }, options);
 
         var map;
         map = new MapCanvas(options);
-
-        map.render();
         target.append(map.element);
+        map.render();   // IE and Safari doesn't render properly when rendered before appending to the parent.
         map.addEvent(); // iPad 1st + iOS5 doesn't work if this sentence is put before "target.append".
 
         return target;
@@ -128,9 +133,9 @@
         this.options = options;
         this.base = {width:651, height:571};
         this.NanseiIslands = {left:0, top:-400, width:100, height:160};
+        this.okinawaCliclableZone = {x:0, y:515, w:180, h:56};
         this.fitSize();
         this.initializeData();
-        this.hovered = false;
     };
 
     Map.prototype.initializeData = function(){
@@ -140,7 +145,10 @@
     Map.prototype.setData = function(prefecture,area){
         this.data = {
             code : prefecture? prefecture.code : null,
-            name : prefecture? this.getPrefectureName(prefecture) : null,
+            name : prefecture? this.getName(prefecture) : null,
+            fullName : prefecture? prefecture.name: null,
+            ShortName : prefecture? this.getShortName(prefecture) : null,
+            englishName : prefecture? this.getEnglishName(prefecture) : null,
             area : area? area : null
         };
     };
@@ -195,7 +203,7 @@
                     y: point.pageY - _target[0].offsetTop
                 };
                 self.render();
-                if (self.hover()) {
+                if (self.isHovering()) {
                     e.preventDefault();
                     e.stopPropagation();
                 }
@@ -203,7 +211,7 @@
                 _target.on(_move, function(e){
                     point	= e.originalEvent.changedTouches ? e.originalEvent.changedTouches[0] : e;
 
-                    if (self.hover()) {
+                    if (self.isHovering()) {
                         self.pointer = {
                             x: point.pageX - _target[0].offsetLeft,
                             y: point.pageY - _target[0].offsetTop
@@ -293,19 +301,34 @@
         return rgb;
     };
 
-    Map.prototype.getPrefectureName = function(prefecture){
-        if (this.options.areas.indexOf(prefecture) > -1)
-            return prefecture.name;
-        switch (this.options.prefectureNameType){
-            case "short"   : return prefecture.name.replace(/[都|府|県]$/, "");
-            case "english" : return definition_of_english_name[prefecture.code];
-            case "romaji"  : return definition_of_english_name[prefecture.code];
-            case "full"    : return prefecture.name;
-            case "kanji"   : return prefecture.name;
-            default        : return prefecture.name;
+    Map.prototype.getName = function(prefecture_or_area){
+        switch (this.isArea(prefecture_or_area)? this.options.areaNameType : this.options.prefectureNameType){
+            case "short"   : return this.getShortName(prefecture_or_area);
+            case "english" : return this.getEnglishName(prefecture_or_area);
+            case "romaji"  : return this.getEnglishName(prefecture_or_area);
+            case "full"    : return prefecture_or_area.name;
+            case "kanji"   : return prefecture_or_area.name;
+            default        : return prefecture_or_area.name;
         }
     };
 
+    Map.prototype.getShortName = function(prefecture_or_area){
+        if (this.isArea(prefecture_or_area)){
+            return prefecture_or_area.name.replace(/地方$/, "");
+        }
+        return prefecture_or_area.name.replace(/[都|府|県]$/, "");
+    };
+
+    Map.prototype.getEnglishName = function(prefecture_or_area){
+        if (this.isArea(prefecture_or_area)){
+            return prefecture_or_area.english? prefecture_or_area.english : null;
+        }
+        return definition_of_english_name[prefecture_or_area.code];
+    };
+
+    Map.prototype.isArea = function(prefecture_or_area){
+        return this.options.areas.indexOf(prefecture_or_area) > -1;
+    };
 
     // ---------------------------------------------------------------------------------------------------------------
     /* Canvas */
@@ -328,12 +351,13 @@
         var context = this.element.getContext("2d");
         context.clearRect( 0, 0, this.element.width, this.element.height );
 
-        this.hovered = false;
+        this.hovering = false;
+        this.hovered  = null;
 
         var render = this.options.selection == "area" ? this.renderAreaMap : this.renderPrefectureMap;
         render.apply(this);
 
-        if (! this.hovered)
+        if (! this.hovering)
             this.initializeData();
 
         this.element.style.background = this.options.backgroundColor;
@@ -345,7 +369,6 @@
         }
 
         this.drawIslandsLine();
-
         this.drawName();
     };
 
@@ -364,6 +387,7 @@
             } else {
                 throw "No area has such prefecture code '" + code + "'.";
             }
+
             context.fill();
             if (this.options.borderLineColor && this.options.borderLineWidth > 0)
                 context.stroke();
@@ -388,6 +412,7 @@
             context.closePath();
 
             this.setProperties(area,area);
+
             context.fill();
             if (this.options.borderLineColor && this.options.borderLineWidth > 0)
                 context.stroke();
@@ -414,67 +439,115 @@
     };
 
     MapCanvas.prototype.drawName = function(){
-        if (! this.options.showsPrefectureName)
+        if (! this.options.showsPrefectureName && ! this.options.showsAreaName)
             return;
 
-        var context = this.element.getContext("2d");
-        this.options.prefectures.forEach(function(prefecture){
+        var drawsArea = this.options.showsAreaName && (! this.options.showsPrefectureName || this.options.selection == "area");
 
-            var center  = {x:0, y:0, n:0};
-            prefecture.path.forEach(function(p){
+        if (drawsArea) {
+            this.options.areas.forEach(function(area){
+                var center = {x:0, y:0, n:0};
+                area.prefectures.forEach(function(code){
+                    var prefecture = this.findPrefectureByCode(code);
+                    var _center = this.getCenterOfPrefecture(prefecture);
+                    center.n ++;
+                    center.x = (center.x * (center.n - 1) + _center.x) / center.n;
+                    center.y = (center.y * (center.n - 1) + _center.y) / center.n;
+                }, this);
 
-                var OFFSET =  {X:0, Y:0};
-
-                switch (prefecture.name){
-                    case "北海道"  : OFFSET.X = 10; break;
-                    case "宮城県"  : OFFSET.Y =  5; break;
-                    case "山形県"  : OFFSET.Y = -5; break;
-                    case "埼玉県"  : OFFSET.Y = -3; break;
-                    case "神奈川県": OFFSET.Y =  2; break;
-                    case "千葉県"  : OFFSET.X =  7; break;
-                    case "滋賀県"  : OFFSET.Y =  5; break;
-                    case "三重県"  : OFFSET.Y = -5; break;
-                    case "広島県"  : OFFSET.Y = -3; break;
-                    case "福岡県"  : OFFSET.Y = -5; break;
-                    case "佐賀県"  : OFFSET.Y = -2; break;
-                    case "鹿児島県": if (this.isNanseiIslands(p)) return;break;
-                }
-
-                if (this.options.movesIslands){
-                    OFFSET = {
-                        X:OFFSET.X + (this.isNanseiIslands(p)? this.NanseiIslands.left : - this.NanseiIslands.width) ,
-                        Y:OFFSET.Y + (this.isNanseiIslands(p)? this.NanseiIslands.top  : 0)
-                    };
-                }
-                if ("coords"  in p) {
-                    var i = 0;
-                    while(true){
-                        var x = p.coords[i * 2 + 0];
-                        var y = p.coords[i * 2 + 1];
-                        if (typeof x === "undefined" || typeof y === "undefined") break;
-
-                        x = x + OFFSET.X;
-                        y = y + OFFSET.Y;
-
-                        center.n += 1;
-                        center.x = (center.x * (center.n - 1) + x) / center.n;
-                        center.y = (center.y * (center.n - 1) + y) / center.n;
-                        i++;
-                    }
-                }
+                this.drawText(area, center);
             }, this);
-            context.save();
-            context.fillStyle = this.options.color;
-            context.font = "normal " + (this.element.width / 100) + "px 'Arial'";
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.shadowColor = "#ffffff";
-            context.shadowBlur = 5;
-            for (var i = 0; i < 5; i++)
-                context.fillText(this.getPrefectureName(prefecture), center.x * this.element.width / this.base.width, center.y * this.element.height / this.base.height);
-            context.restore();
-        }, this);
+        } else {
+            this.options.prefectures.forEach(function(prefecture){
+                var center = this.getCenterOfPrefecture(prefecture);
+                this.drawText(prefecture, center);
+            }, this);
+        }
     };
+
+    MapCanvas.prototype.drawText = function(prefecture_or_area, point){
+        var context = this.element.getContext("2d");
+        var area = this.isArea(prefecture_or_area)? prefecture_or_area : this.findAreaBelongingToByCode(prefecture_or_area.code);
+
+        context.save();
+
+        if (this.options.fontColor && this.options.fontColor == "areaColor"){
+            var hovered = this.hovered == prefecture_or_area.code;
+            var color   = area.color? area.color : this.options.color;
+            var hvColor = area.color && area.hoverColor ?
+                area.hoverColor :
+                area.color?
+                    this.brighten(area.color, 0.2) :
+                    this.options.hoverColor? this.options.hoverColor : this.brighten(this.options.color, 0.2);
+
+            context.fillStyle = hovered ? hvColor : color;
+        } else if (this.options.fontColor) {
+            context.fillStyle = this.options.fontColor;
+        } else {
+            context.fillStyle = this.options.color;
+        }
+
+        context.font = (this.options.fontSize? this.options.fontSize : this.element.width / 100) + "px '" + (this.options.font? this.options.font : "Arial") + "'";
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.shadowColor = this.options.fontShadowColor? this.options.fontShadowColor : "#ffffff";
+        context.shadowBlur = 5;
+        for (var i = 0; i < 5; i++)
+            context.fillText(this.getName(prefecture_or_area), point.x * this.element.width / this.base.width, point.y * this.element.height / this.base.height);
+        context.restore();
+    };
+
+
+    MapCanvas.prototype.getCenterOfPrefecture = function(prefecture){
+        var center = {x:0, y:0, n:0};
+
+        var OFFSET =  {X:0, Y:0};
+        switch (prefecture.name){
+            case "北海道"  : OFFSET.X = 10; OFFSET.Y = -5; break;
+            case "宮城県"  : OFFSET.Y =  5; break;
+            case "山形県"  : OFFSET.Y = -5; break;
+            case "埼玉県"  : OFFSET.Y = -3; break;
+            case "神奈川県": OFFSET.Y =  2; break;
+            case "千葉県"  : OFFSET.X =  7; break;
+            case "石川県"  : OFFSET.Y = -5; break;
+            case "滋賀県"  : OFFSET.Y =  5; break;
+            case "京都府"  : OFFSET.Y = -2; break;
+            case "兵庫県"  : OFFSET.Y =  4; break;
+            case "三重県"  : OFFSET.Y = -5; break;
+            case "広島県"  : OFFSET.Y = -3; break;
+            case "島根県"  : OFFSET.X = -5; break;
+            case "高知県"  : OFFSET.X =  5; break;
+            case "福岡県"  : OFFSET.Y = -5; break;
+            case "長崎県"  : OFFSET.Y =  5; break;
+        }
+
+        var path = prefecture.path[0];
+
+        if (this.options.movesIslands){
+            OFFSET = {
+                X:OFFSET.X + (this.isNanseiIslands(path)? this.NanseiIslands.left : - this.NanseiIslands.width) ,
+                Y:OFFSET.Y + (this.isNanseiIslands(path)? this.NanseiIslands.top  : 0)
+            };
+        }
+        if ("coords"  in path) {
+            var i = 0;
+            while(true){
+                var x = path.coords[i * 2 + 0];
+                var y = path.coords[i * 2 + 1];
+                if (typeof x === "undefined" || typeof y === "undefined") break;
+
+                x = x + OFFSET.X;
+                y = y + OFFSET.Y;
+
+                center.n ++;
+                center.x = (center.x * (center.n - 1) + x) / center.n;
+                center.y = (center.y * (center.n - 1) + y) / center.n;
+                i++;
+            }
+        }
+        return center;
+    };
+
 
     MapCanvas.prototype.drawCoords = function(coords, OFFSET){
         var context = this.element.getContext("2d");
@@ -524,7 +597,8 @@
         var pointerIsOn = this.pointer && context.isPointInPath( this.pointer.x, this.pointer.y );
 
         if (pointerIsOn){
-            this.hovered = true;
+            this.hovering = true;
+            this.hovered  = prefecture.code;
 
             if (this.data.code != prefecture.code && this.options.onHover){
                 this.setData(prefecture,area);
@@ -545,8 +619,8 @@
         this.element.style.cursor = (this.data.code == null)? "default" : "pointer";
     };
 
-    MapCanvas.prototype.hover = function(){
-        return this.hovered;
+    MapCanvas.prototype.isHovering = function(){
+        return this.hovering;
     };
 
     // ---------------------------------------------------------------------------------------------------------------
@@ -555,6 +629,7 @@
         {
             "code"       :0,
             "name"       :"日本",
+            "english"    :"Japan",
             "color"      :"#a0a0a0",
             "prefectures":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47]
         }
