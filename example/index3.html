@@ -39,6 +39,7 @@
                     },
                     onHover:function(data){
                         $("#text").html(data.area.name + "　" + data.name);
+                        $("#text").css("background", data.area.color);
                     }
                 }
             );
@@ -47,6 +48,6 @@
 </head>
 <body>
     <div id="map"></div>
-    <p id="text" style="margin-bottom: 10px"></p>
+    <p id="text" style="padding: 10px; width: 800px; color: #ffffff; text-align: center"></p>
 </body>
 </html>
