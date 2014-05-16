@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Japan Map Selector (jQuery Plugin) v0.0.1
  *
  * Copyright (c) 2014 Takemaru Hirai
@@ -9,7 +9,7 @@
  * Includes code of tikamoton
  * http://jsdo.it/tikamoton/vz68
  *
- * Date: 2013-07-03T13:30Z
+ * Date: 2014-05-15
  */
 
 ;(function($){
@@ -44,7 +44,7 @@
             font                : "Arial",
             fontSize            : null,
             fontColor           : null,
-            fontShadowColor     : "#ffffff",
+            fontShadowColor     : null,
             onSelect            : function(){},
             onHover             : function(){}
         }, options);
@@ -468,11 +468,20 @@
     MapCanvas.prototype.drawText = function(prefecture_or_area, point){
         var context = this.element.getContext("2d");
         var area = this.isArea(prefecture_or_area)? prefecture_or_area : this.findAreaBelongingToByCode(prefecture_or_area.code);
+        var drawsArea = this.options.showsAreaName && (! this.options.showsPrefectureName || this.options.selection == "area");
+
 
         context.save();
 
         if (this.options.fontColor && this.options.fontColor == "areaColor"){
-            var hovered = this.hovered == prefecture_or_area.code;
+            var hovered;
+            if (drawsArea == (this.options.selection == "area")){
+                hovered = this.hovered == prefecture_or_area.code;
+            } else if (drawsArea) {
+                hovered = area.prefectures.indexOf(this.hovered) > -1;
+            } else {
+                hovered = this.hovered == area.code;
+            }
             var color   = area.color? area.color : this.options.color;
             var hvColor = area.color && area.hoverColor ?
                 area.hoverColor :
@@ -490,8 +499,11 @@
         context.font = (this.options.fontSize? this.options.fontSize : this.element.width / 100) + "px '" + (this.options.font? this.options.font : "Arial") + "'";
         context.textAlign = 'center';
         context.textBaseline = 'middle';
-        context.shadowColor = this.options.fontShadowColor? this.options.fontShadowColor : "#ffffff";
-        context.shadowBlur = 5;
+        if (this.options.fontShadowColor){
+            context.shadowColor = this.options.fontShadowColor;
+            context.shadowBlur = 5;
+        }
+
         for (var i = 0; i < 5; i++)
             context.fillText(this.getName(prefecture_or_area), point.x * this.element.width / this.base.width, point.y * this.element.height / this.base.height);
         context.restore();
