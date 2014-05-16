@@ -38,7 +38,7 @@
                         alert(data.name);
                     },
                     onHover:function(data){
-                        $("#text").html(data.area.name + ">" + data.name);
+                        $("#text").html(data.area.name + "　" + data.name);
                     }
                 }
             );
@@ -46,7 +46,7 @@
     </script>
 </head>
 <body>
+    <p id="text" style="margin-bottom: 10px; font-weight: bold"></p>
     <div id="map"></div>
-    <p id="text" style="margin-top: 10px; font-weight: bold"></p>
 </body>
 </html>
