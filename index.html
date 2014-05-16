@@ -262,7 +262,7 @@ borderLineWidth : 0.5
 <h2>
 <a name="onselect--functiondata" class="anchor" href="#onselect--functiondata"><span class="octicon octicon-link"></span></a>onSelect : function(data)</h2>
 
-<p>It runs when you click or tap some prefecture (or area, it depends on <code>options.selection</code>). The argument <code>data</code> has parameters <code>data.code</code>, <code>data.name</code>, <code>data.areaCode</code>, <code>data.areaName</code>. <code>data.code</code> and <code>data.areaCode</code> is same when you set <code>options.selection = "area"</code>.</p>
+<p>It runs when you click or tap some prefecture (or area, it depends on <code>options.selection</code>). The argument <code>data</code> has parameters <code>data.code</code>, <code>data.name</code>, <code>data.area</code> (an object you defined for <code>options.areas</code>). <code>data.code</code> equals to <code>data.area.code</code> when you set <code>options.selection = "area"</code>.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">onSelect</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
     <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
@@ -272,7 +272,7 @@ borderLineWidth : 0.5
 <h2>
 <a name="onhover--functiondata" class="anchor" href="#onhover--functiondata"><span class="octicon octicon-link"></span></a>onHover : function(data)</h2>
 
-<p>It runs when your mouse is on some prefecture (or area, it depends on <code>options.selection</code>). The argument <code>data</code> has parameters <code>data.code</code>, <code>data.name</code>, <code>data.areaCode</code>, <code>data.areaName</code>. <code>data.code</code> and <code>data.areaCode</code> is same when you set <code>options.selection = "area"</code>.</p>
+<p>It runs when your mouse is on some prefecture (or area). The argument <code>data</code> is the same as that of <code>onSelect</code>.</p>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">onHover</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
