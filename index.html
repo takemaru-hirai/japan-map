@@ -65,7 +65,7 @@
 <p><a href="example/index.html">DEMO - EXAMPLE 1</a></p>
 
 <h1>
-<a name="another-example" class="anchor" href="#another-example"><span class="octicon octicon-link"></span></a>Another Example</h1>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h1>
 
 <p>You can change definition of the areas as you like.</p>
 
@@ -96,6 +96,7 @@
         <span class="nx">showsPrefectureName</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
         <span class="nx">prefectureNameType</span><span class="o">:</span> <span class="s2">"short"</span><span class="p">,</span>
         <span class="nx">movesIslands</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">fontSize</span> <span class="o">:</span> <span class="mi">11</span><span class="p">,</span>
         <span class="nx">onSelect</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
             <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
         <span class="p">}</span>
@@ -105,6 +106,46 @@
 </pre></div>
 
 <p><a href="example/index2.html">DEMO - EXAMPLE 2</a></p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+
+    <span class="kd">var</span> <span class="nx">areas</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">1</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"北海道地方"</span><span class="p">,</span> <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#ca93ea"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#e0b1fb"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">2</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"東北地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#a7a5ea"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#d6d4fd"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">3</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"関東地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#84b0f6"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#c1d8fd"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">4</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"北陸・甲信越地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#52d49c"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#93ecc5"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">4</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"東海地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#77e18e"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#aff9bf"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">6</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"近畿地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#f2db7b"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#f6e8ac"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">30</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">7</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"中国地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#f9ca6c"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#ffe5b0"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">31</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">35</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">8</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"四国地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#fbad8b"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#ffd7c5"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">36</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">39</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span> <span class="mi">9</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"九州地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#f7a6a6"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#ffcece"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">46</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s2">"code"</span><span class="o">:</span><span class="mi">10</span> <span class="p">,</span> <span class="s2">"name"</span><span class="o">:</span><span class="s2">"沖縄地方"</span><span class="p">,</span>   <span class="s2">"color"</span><span class="o">:</span><span class="s2">"#ea89c4"</span><span class="p">,</span> <span class="s2">"hoverColor"</span><span class="o">:</span><span class="s2">"#fdcae9"</span><span class="p">,</span> <span class="s2">"prefectures"</span><span class="o">:</span><span class="p">[</span><span class="mi">47</span><span class="p">]}</span>
+    <span class="p">];</span>
+
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#map"</span><span class="p">).</span><span class="nx">japanMap</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="nx">areas</span>  <span class="o">:</span> <span class="nx">areas</span><span class="p">,</span>
+            <span class="nx">selection</span> <span class="o">:</span> <span class="s2">"prefecture"</span><span class="p">,</span>
+            <span class="nx">borderLineWidth</span><span class="o">:</span> <span class="mf">0.25</span><span class="p">,</span>
+            <span class="nx">drawsBoxLine</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="nx">movesIslands</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">showsAreaName</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nx">width</span><span class="o">:</span> <span class="mi">800</span><span class="p">,</span>
+            <span class="nx">font</span> <span class="o">:</span> <span class="s2">"MS Mincho"</span><span class="p">,</span>
+            <span class="nx">fontSize</span> <span class="o">:</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="nx">fontColor</span> <span class="o">:</span> <span class="s2">"areaColor"</span><span class="p">,</span>
+            <span class="nx">fontShadowColor</span> <span class="o">:</span> <span class="s2">"black"</span><span class="p">,</span>
+            <span class="nx">onSelect</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">);</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<p><a href="example/index3.html">DEMO - EXAMPLE 3</a></p>
 
 <h1>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h1>
@@ -178,17 +219,39 @@ borderLineWidth : 0.5
 </code></pre>
 
 <h2>
-<a name="showsprefecturename" class="anchor" href="#showsprefecturename"><span class="octicon octicon-link"></span></a>showsPrefectureName</h2>
+<a name="showsprefecturename-showsareaname" class="anchor" href="#showsprefecturename-showsareaname"><span class="octicon octicon-link"></span></a>showsPrefectureName, showsAreaName</h2>
 
-<p>If true, the names of prefectures are shown on the map. Default value is <code>false</code>.</p>
+<p>If true, the names of prefectures (or areas) are shown on the map. Default value is <code>false</code>. If you set both of parameters are <code>true</code>, which is draw on map is depends on <code>selection</code> parameter. </p>
 
 <pre><code>showsPrefectureName : true
 </code></pre>
+
+<p><code>showsAreaName</code> parameter is available in <code>&gt;= 0.0.4</code>.</p>
+
+<h2>
+<a name="font-fontsize-fontcolor-fontshadowcolor" class="anchor" href="#font-fontsize-fontcolor-fontshadowcolor"><span class="octicon octicon-link"></span></a>font, fontSize, fontColor, fontShadowColor</h2>
+
+<p>You can set font styles to draw names of prefectures or areas on the map. <code>font</code> parameter means font's name and if not set client default font is used. You can set <code>fontSize</code> as number. However, if you set <code>"areaColor"</code> to this parameter, colors of fonts will be the same as that of area's background. Default font color is that of <code>options.color</code> parameter. Fonts has shadow (or blur) around them, but if you don't want this, set <code>"none"</code>. Default color of shadow is <code>"#ffffff"</code>. </p>
+
+<pre><code>font : "MS mincho",
+fontSize : 12,
+fontColor : "#000000",
+fontShadowColor : "white"
+</code></pre>
+
+<p>These parameters are available in <code>&gt;= 0.0.4</code>.</p>
 
 <h2>
 <a name="prefecturenametype" class="anchor" href="#prefecturenametype"><span class="octicon octicon-link"></span></a>prefectureNameType</h2>
 
 <p>String parameter how shows the names of prefectures. <code>"full"</code> or <code>"kanji"</code> shows full name as Kanji  like <code>東京都</code> or <code>大阪府</code>. <code>"short"</code> shows shorten name as Kanji like <code>東京</code> or <code>大阪</code>. <code>"english"</code> or <code>"romaji"</code> shows alphabetical name like <code>Tokyo</code> or <code>Osaka</code>. Default value is <code>"full"</code>.</p>
+
+<h2>
+<a name="areanametype" class="anchor" href="#areanametype"><span class="octicon octicon-link"></span></a>areaNameType</h2>
+
+<p>String parameter how shows the names of areas. <code>"full"</code> shows full name of each area you defined. <code>"short"</code> shows shorten name which <code>"地方"</code> is omitted. <code>"english"</code> shows alphabetical name if you define <code>english</code> parameter to each of <code>areasObject</code> which is set to <code>options.areas</code> parameter (see below).</p>
+
+<p>This parameter is available in <code>&gt;= 0.0.4</code>.</p>
 
 <h2>
 <a name="movesislands" class="anchor" href="#movesislands"><span class="octicon octicon-link"></span></a>movesIslands</h2>
@@ -214,7 +277,7 @@ borderLineWidth : 0.5
 <pre><code>areas : areasObject
 </code></pre>
 
-<p><code>areas</code> object array is like </p>
+<p><code>areas</code> parameter requires array of object like </p>
 
 <div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">areasObject</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">...,</span>
